@@ -6,7 +6,7 @@ region: nyc
 static_sites:
   - name: web
     github:
-      repo: yamillealexander/TPSWebAIDev
+      repo: yamillealexander/TPSPublic
       branch: main
       deploy_on_push: true
     source_dir: /
