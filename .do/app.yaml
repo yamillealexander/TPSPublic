@@ -1,0 +1,24 @@
+# DigitalOcean App Platform spec for Tus Placas Seguras
+# Deploys the Vite + React build as a Static Site with SPA fallback.
+# Apply with: doctl apps create --spec .do/app.yaml
+name: tusplacasseguras
+region: nyc
+static_sites:
+  - name: web
+    github:
+      repo: yamillealexander/TPSWebAIDev
+      branch: main
+      deploy_on_push: true
+    source_dir: /
+    build_command: npm ci && npm run build
+    output_dir: dist
+    environment_slug: node-js
+    catchall_document: index.html
+    # Add VITE_WEB3FORMS_KEY in the DO dashboard (encrypted) before
+    # the consultation form will deliver real emails. Without it the
+    # form simulates success in dev mode.
+    # envs:
+    #   - key: VITE_WEB3FORMS_KEY
+    #     scope: BUILD_TIME
+    #     type: SECRET
+    #     value: <set in dashboard>

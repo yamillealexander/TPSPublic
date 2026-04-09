@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-white text-slate-800 font-sans overflow-x-hidden;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-slate-900;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 sm:px-6 text-sm sm:text-base font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn bg-brand-900 text-white hover:bg-brand-700 focus-visible:ring-brand-500 shadow-md hover:shadow-lg;
+  }
+  .btn-accent {
+    @apply btn bg-sun-500 text-slate-900 hover:bg-sun-400 focus-visible:ring-sun-500 shadow-md hover:shadow-lg;
+  }
+  .btn-outline {
+    @apply btn border-2 border-brand-900 text-brand-900 hover:bg-brand-900 hover:text-white focus-visible:ring-brand-500;
+  }
+  .section {
+    @apply py-14 sm:py-20 lg:py-24;
+  }
+  .section-heading {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold mb-4;
+  }
+  .section-subheading {
+    @apply text-lg text-slate-600 max-w-2xl mx-auto;
+  }
+}
