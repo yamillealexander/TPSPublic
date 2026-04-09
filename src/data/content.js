@@ -97,7 +97,7 @@ export const learnTopics = {
 
 export const netMetering = {
   eyebrow: 'Tema Destacado',
-  title: '¿Qué es Medición Neta y por qué importa?',
+  title: '¿Qué es Medición Neta y por qué te debe importar?',
   body: 'La Medición Neta es el programa que permite que la electricidad que producen tus paneles y no usas en el momento se acredite en tu factura de la AEE. Entender cómo funciona — y qué cambios pueden venir — es clave para calcular si una instalación solar realmente te conviene en Puerto Rico.',
   cta: 'Próximamente: guía completa en el blog',
 };
