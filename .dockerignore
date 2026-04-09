@@ -1,0 +1,29 @@
+# Node
+node_modules
+dist
+npm-debug.log*
+
+# .NET
+server/bin
+server/obj
+
+# Source control / editors
+.git
+.github
+.vscode
+.idea
+
+# OS
+.DS_Store
+
+# Logs and env
+*.log
+.env
+.env.*
+!.env.example
+
+# Repo metadata not needed inside the build
+README.md
+.do
+Dockerfile
+.dockerignore

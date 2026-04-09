@@ -1,24 +1,48 @@
 # DigitalOcean App Platform spec for Tus Placas Seguras
-# Deploys the Vite + React build as a Static Site with SPA fallback.
-# Apply with: doctl apps create --spec .do/app.yaml
+#
+# Single container running .NET 10 Minimal API. The same process serves
+# the React SPA (built into wwwroot) and exposes /api/contact for the
+# consultation form. The image is built and published to GHCR by
+# .github/workflows/docker-publish.yml on every push to `main`.
+#
+# Prerequisites before first apply:
+#   1. Push to main once so the GitHub Action publishes the image to:
+#        ghcr.io/yamillealexander/tpspublic:latest
+#   2. Make the package public:
+#        https://github.com/users/yamillealexander/packages/container/tpspublic
+#        → Package settings → Change visibility → Public
+#      (Otherwise DO needs registry credentials configured separately.)
+#   3. After the app is created, set Web3Forms__AccessKey in the DO dashboard
+#      (App → Settings → Environment Variables → Encrypted) so the contact
+#      form actually delivers email. Without it the API returns
+#      { ok: true, simulated: true } and logs a warning.
+#
+# Apply with:
+#   doctl apps create --spec .do/app.yaml
+# Or update an existing app:
+#   doctl apps update <app-id> --spec .do/app.yaml
 name: tusplacasseguras
 region: nyc
-static_sites:
+services:
   - name: web
-    github:
-      repo: yamillealexander/TPSPublic
-      branch: main
-      deploy_on_push: true
-    source_dir: /
-    build_command: npm ci && npm run build
-    output_dir: dist
-    environment_slug: node-js
-    catchall_document: index.html
-    # Add VITE_WEB3FORMS_KEY in the DO dashboard (encrypted) before
-    # the consultation form will deliver real emails. Without it the
-    # form simulates success in dev mode.
+    image:
+      registry_type: GHCR
+      registry: yamillealexander
+      repository: tpspublic
+      tag: latest
+      deploy_on_push:
+        enabled: true
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    health_check:
+      http_path: /healthz
+      initial_delay_seconds: 10
+      period_seconds: 10
+    # Set Web3Forms__AccessKey in the DO dashboard as an encrypted secret.
+    # Declared here (commented) for documentation:
     # envs:
-    #   - key: VITE_WEB3FORMS_KEY
-    #     scope: BUILD_TIME
+    #   - key: Web3Forms__AccessKey
+    #     scope: RUN_TIME
     #     type: SECRET
     #     value: <set in dashboard>
